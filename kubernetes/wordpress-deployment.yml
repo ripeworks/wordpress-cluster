@@ -1,32 +1,33 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress-versicor
+  name: example-website
   labels:
     app: wordpress
-    site: versicor
 spec:
   ports:
     - port: 80
   selector:
     app: wordpress
-    site: versicor
+    tier: frontend
+    site: example-website
   type: LoadBalancer
 --
 apiVersion: v1
 kind: Deployment
 metadata:
-  name: wordpress-versicor
+  name: example-website
   labels:
     app: wordpress
-    site: versicor
+    site: example-website
 spec:
   replicas: 1
   template:
     metadata:
       labels:
         app: wordpress
-        site: versicor
+        tier: frontend
+        site: example-website
     spec:
       containers:
         - image: ripeworks/wordpress:latest
@@ -40,5 +41,5 @@ spec:
             - name: efs
               nfs:
                 server: fs-92b64dda.efs.us-east-1.amazonaws.com
-                path: /wordpress/goversicor.com
+                path: /wordpress/my-website.com
 
