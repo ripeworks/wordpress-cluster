@@ -11,8 +11,8 @@ spec:
     app: wordpress
     tier: frontend
     site: example-website
-  type: LoadBalancer
---
+  type: ClusterIP
+---
 apiVersion: v1
 kind: Deployment
 metadata:
