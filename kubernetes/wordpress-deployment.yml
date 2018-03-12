@@ -13,7 +13,7 @@ spec:
   type: LoadBalancer
 --
 apiVersion: v1
-kind: ReplicationController
+kind: Deployment
 metadata:
   name: wordpress
   labels:
@@ -31,7 +31,6 @@ spec:
           name: wordpress
           ports:
             - containerPort: 80
-              name: wordpress
           volumeMounts:
             - name: efs
               mountPath: /app
