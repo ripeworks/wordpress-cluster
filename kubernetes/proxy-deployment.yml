@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    worker_processes 5;
+
+    http {
+      server {
+        server_name mywebsite.com;
+        location / {
+          proxy_pass http://internal-kube-thing;
+        }
+      }
+    }
+--
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-proxy
+  app: nginx
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: nginx
+  type: LoadBalancer
+--
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: wordpress-proxy
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.8
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config
