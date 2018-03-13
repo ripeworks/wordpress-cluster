@@ -13,9 +13,10 @@ data:
         listen 80;
         server_name mywebsite.com;
         location / {
-          proxy_pass http://service-name.default.svc.cluster.local;
+          proxy_pass http://example-website.default.svc.cluster.local;
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
+          proxy_pass_request_headers on;
         }
       }
     }
@@ -26,9 +27,15 @@ metadata:
   name: wordpress-proxy
   labels:
     app: nginx
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert:
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
 spec:
   ports:
-    - port: 80
+    - port: 443
+      name: https
+      targetPort: 80
   selector:
     app: nginx
   type: LoadBalancer
