@@ -13,7 +13,7 @@ spec:
     site: example-website
   type: ClusterIP
 ---
-apiVersion: v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: example-website
@@ -30,16 +30,16 @@ spec:
         site: example-website
     spec:
       containers:
-        - image: ripeworks/wordpress:latest
+        - image: ripeworks/wordpress:0.1
           name: wordpress
           ports:
             - containerPort: 80
           volumeMounts:
             - name: efs
               mountPath: /app
-          volumes:
-            - name: efs
-              nfs:
-                server: fs-92b64dda.efs.us-east-1.amazonaws.com
-                path: /wordpress/my-website.com
+      volumes:
+        - name: efs
+          nfs:
+            server: fs-92b64dda.efs.us-east-1.amazonaws.com
+            path: /wordpress/my-website.com
 
