@@ -40,13 +40,6 @@ ADD files/run.sh /
 RUN chmod +x /run.sh
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp-cli && chown nginx:nginx /usr/bin/wp-cli
 
-RUN { \
-  echo "maildomain $MAILDOMAIN"; \
-  echo "host $SMTP_HOST"; \
-  echo "user $SMTP_USER"; \
-  echo "password $SMTP_PASS"; \
-} >> /etc/msmtprc
-
 EXPOSE 80
 VOLUME ["/app"]
 
