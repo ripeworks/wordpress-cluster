@@ -10,6 +10,9 @@ fi
 
 # php-fpm
 mkdir -p /app/logs/php-fpm
+mkdir -p /app/sessions
+chown nginx:nginx /app/sessions
+chmod 600 /app/sessions
 
 # nginx
 mkdir -p /app/logs/nginx
