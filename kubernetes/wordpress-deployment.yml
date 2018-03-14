@@ -30,7 +30,7 @@ spec:
         site: example-website
     spec:
       containers:
-        - image: ripeworks/wordpress:0.3
+        - image: ripeworks/wordpress:0.5
           name: wordpress
           ports:
             - containerPort: 80

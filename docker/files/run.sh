@@ -1,7 +1,5 @@
 #!/bin/sh
 
-[ -f /run-pre.sh ] && /run-pre.sh
-
 chown -R nginx:nginx /app
 
 if [ ! -d /app/wordpress ] ; then
@@ -13,7 +11,7 @@ mkdir -p /app/logs/php-fpm
 
 # session storage
 if [ ! -d /app/sessions ] ; then
-  mkdir -p /app/sesions
+  mkdir -p /app/sessions
   chown nginx:nginx /app/sessions
   chmod 600 /app/sessions
 fi

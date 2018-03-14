@@ -30,6 +30,7 @@ RUN echo 'http://dl-4.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositor
     curl \
     musl \
     msmtp \
+    dumb-init \
     && apk --update --no-cache add tar
 RUN rm -rf /var/cache/apk/*
 
@@ -43,4 +44,5 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 EXPOSE 80
 VOLUME ["/app"]
 
-CMD ["/run.sh"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["bash", "-c", "exec /run.sh"]
