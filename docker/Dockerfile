@@ -29,14 +29,23 @@ RUN echo 'http://dl-4.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositor
     mysql-client \
     curl \
     musl \
+    msmtp \
     && apk --update --no-cache add tar
 RUN rm -rf /var/cache/apk/*
 
 ADD files/nginx.conf /etc/nginx/
-ADD files/php-fpm.conf /etc/php/
+ADD files/php-fpm.conf /etc/php7/
+ADD files/msmtprc /etc/msmtprc
 ADD files/run.sh /
 RUN chmod +x /run.sh
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp-cli && chown nginx:nginx /usr/bin/wp-cli
+
+RUN { \
+  echo "maildomain $MAILDOMAIN"; \
+  echo "host $SMTP_HOST"; \
+  echo "user $SMTP_USER"; \
+  echo "password $SMTP_PASS"; \
+} >> /etc/msmtprc
 
 EXPOSE 80
 VOLUME ["/app"]
