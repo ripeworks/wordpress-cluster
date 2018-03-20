@@ -25,6 +25,7 @@ password $SMTP_PASS
 EOT
 
 # nginx
+mkdir -p /app/nginx
 mkdir -p /app/logs/nginx
 mkdir -p /tmp/nginx
 chown nginx:nginx /tmp/nginx
