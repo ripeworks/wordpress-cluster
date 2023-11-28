@@ -37,6 +37,12 @@ The Lambda function uses a custom layer from the serverless PHP runtime, Bref.
 
 An EFS access point must be attached to the function, and for this your Lambda function will need to be in a VPC. Which also most likely means you will need a NAT Gateway in your VPC to access the internet.
 
+### Resources
+
+- [KotobaMedia/terraform-aws-wordpress-on-lambda-efs](https://github.com/KotobaMedia/terraform-aws-wordpress-on-lambda-efs)
+
+Pretty much lifted the entire Lambda setup from this repo, thank you!
+
 ## Kubernetes
 
 Use Kubernetes as a container platform to run tiny stateless instances of Wordpress. Each container uses EFS for file storage, and RDS for database storage.
