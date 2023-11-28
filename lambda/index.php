@@ -35,6 +35,7 @@ $extension = end($split);
 $mapped_type = $extension_map[$extension];
 
 if ( $mapped_type && file_exists( $local_file_path ) ) {
+    header("Cache-Control: public, max-age=3600;");
     header("Content-Type: {$mapped_type}");
     readfile($local_file_path);
 } elseif ( $extension == "php" && file_exists( $local_file_path ) ) {
