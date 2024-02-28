@@ -2,7 +2,7 @@ service: app
 
 provider:
   name: aws
-  region: es-east-1
+  region: us-east-1
 
 plugins:
   - ./vendor/bref/bref
@@ -12,7 +12,7 @@ functions:
     name: wordpress-website
     handler: index.php
     # using bref plugin
-    runtime: php-84-fpm
+    runtime: php-83-fpm
     # without bref plugin
     # runtime: provided.al2
     # layers:
@@ -21,6 +21,14 @@ functions:
     url: true
     environment:
       BREF_BINARY_RESPONSES: "1"
+    vpc:
+      # efs requires vpc
+      # securityGroupIds:
+      # subnetIds:
+    fileSystemConfig:
+      localMountPath: /mnt/root
+      # efs access point arn
+      # arn:
 
 package:
   patterns:
